@@ -1,0 +1,29 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meds</title>
+  </head>
+
+  <body>
+    <h1>Meds</h1>
+
+    <table border="0" cellspacing="0" cellpadding="20">
+      {{#rows}}
+        <tr>
+          <td>{{mid}}</td>
+          <td>{{name}}</td>
+          <td>{{count}}</td>
+          <td>{{brand}}</td>
+          <td>
+            <form action="/meds/delete/{{mid}}" method="post">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {{/rows}}
+    </table>
+  </body>
+
+</html>
