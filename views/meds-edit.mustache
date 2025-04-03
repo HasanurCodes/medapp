@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Edit Meds</title>
+</head>
+
+<body>
+	<h1>Form to Add Meds {{med.mid}}</h1>
+	
+	<form action="/meds/edit/{{med.mid}}" method="post">
+		<input type="text" name="name" value="{{med.name}}" placeholder="{{med.name}}" />
+		<input type="text" name="count" value="{{med.count}}" placeholder="{{med.count}}" />
+		<input type="text" name="brand" value="{{med.brand}}" placeholder="{{med.brand}}" />
+		<button type="submit">Save</button>
+	</form>
+</body>

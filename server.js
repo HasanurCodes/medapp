@@ -16,75 +16,128 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extened: false }));
 
 app.get("/meds", (req, res) => {
-  const client = new Client({
-    user: "postgres",
-    host: "localhost",
-    database: "medical1",
-    port: 5432,
-    password: "admin123",
-  });
+	const client = new Client({
+		user: "postgres",
+		host: "localhost",
+		database: "medical1",
+		port: 5432,
+		password: "admin123",
+	});
 
-  client
-    .connect()
-    .then(() => {
-      return client.query("SELECT * FROM meds");
-    })
-    .then((results) => {
-      console.log("results: ", results);
-      res.render("meds", results);
-    });
+	client
+		.connect()
+		.then(() => {
+			return client.query("SELECT * FROM meds");
+		})
+		.then((results) => {
+			console.log("results: ", results);
+			res.render("meds", results);
+		});
 });
 
 app.get("/add", (req, res) => {
-  res.render("meds-form");
+	res.render("meds-form");
 });
 
 app.post("/meds/add", (req, res) => {
-  const client = new Client({
-    user: "postgres",
-    host: "localhost",
-    database: "medical1",
-    port: 5432,
-    password: "admin123",
-  });
+	const client = new Client({
+		user: "postgres",
+		host: "localhost",
+		database: "medical1",
+		port: 5432,
+		password: "admin123",
+	});
 
-  client
-    .connect()
-    .then(() => {
-      console.log("connection successful");
-      const sql = "INSERT INTO meds (name, count, brand) VALUES ($1, $2, $3)";
-      const params = [req.body.name, req.body.count, req.body.brand];
+	client
+		.connect()
+		.then(() => {
+			console.log("connection successful");
+			const sql =
+				"INSERT INTO meds (name, count, brand) VALUES ($1, $2, $3)";
+			const params = [req.body.name, req.body.count, req.body.brand];
 
-      return client.query(sql, params);
-    })
-    .then((results) => {
-      console.log("results: ", results);
-      res.redirect("/meds");
-    });
+			return client.query(sql, params);
+		})
+		.then((results) => {
+			console.log("results: ", results);
+			res.redirect("/meds");
+		});
 });
 
 app.post("/meds/delete/:id", (req, res) => {
-  const client = new Client({
-    user: "postgres",
-    host: "localhost",
-    database: "medical1",
-    port: 5432,
-    password: "admin123",
-  });
+	const client = new Client({
+		user: "postgres",
+		host: "localhost",
+		database: "medical1",
+		port: 5432,
+		password: "admin123",
+	});
 
-  client
-    .connect()
-    .then(() => {
-      const sql = "DELETE FROM meds WHERE mid=$1";
-      const params = [req.params.id];
+	client
+		.connect()
+		.then(() => {
+			const sql = "DELETE FROM meds WHERE mid=$1";
+			const params = [req.params.id];
 
-      return client.query(sql, params);
-    })
-    .then((results) => {
-      res.redirect("/meds");
-    });
+			return client.query(sql, params);
+		})
+		.then((results) => {
+			res.redirect("/meds");
+		});
+});
+
+app.get("/meds/edit/:id", (req, res) => {
+	const client = new Client({
+		user: "postgres",
+		host: "localhost",
+		database: "medical1",
+		port: 5432,
+		password: "admin123",
+	});
+
+	client
+		.connect()
+		.then(() => {
+			const sql = "SELECT * FROM meds WHERE mid=$1";
+			const params = [req.params.id];
+
+			return client.query(sql, params);
+		})
+		.then((results) => {
+			console.log(results.rows[0]);
+			res.render("meds-edit", { med: results.rows[0] });
+		});
+});
+
+app.post("/meds/edit/:id", (req, res) => {
+	const client = new Client({
+		user: "postgres",
+		host: "localhost",
+		database: "medical1",
+		port: 5432,
+		password: "admin123",
+	});
+
+	client
+		.connect()
+		.then(() => {
+			const sql =
+				"UPDATE meds SET name=$1, count=$2, brand=$3 WHERE mid=$4";
+			const params = [
+				req.body.name,
+				req.body.count,
+				req.body.brand,
+				req.params.id,
+			];
+
+			return client.query(sql, params);
+		})
+		.then((results) => {
+			console.log(results);
+			res.redirect("/meds");
+		});
 });
 
 app.listen(5000, () => {
-  console.log("listening to port 5000");
+	console.log("listening to port 5000");
 });
