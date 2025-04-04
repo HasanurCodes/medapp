@@ -2,6 +2,10 @@
 	width: 100%;
 }
 
+.jumbotron {
+	position: relative;
+}
+
 .centered {
 	position: absolute;
 	top: 55%;

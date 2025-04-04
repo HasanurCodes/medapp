@@ -2,4 +2,4 @@
 
 A full stack web app project
 
-## Status: Ongoing
+## Status: complete

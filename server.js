@@ -15,6 +15,34 @@ app.use(express.static("public"));
 // @ts-ignore
 app.use(bodyParser.urlencoded({ extened: false }));
 
+// dashboard
+app.get("/dashboard", (req, res) => {
+	const client = new Client({
+		user: "postgres",
+		host: "localhost",
+		database: "medical1",
+		port: 5432,
+		password: "admin123",
+	});
+
+	client
+		.connect()
+		.then((_) => {
+			return client.query(
+				"SELECT SUM(count) FROM meds; SELECT DISTINCT COUNT(brand) FROM meds"
+			);
+		})
+		.then((results) => {
+			console.log(results[0]);
+			console.log(results[1]);
+			res.render("dashboard", {
+				rows1: results[0].rows,
+				rows2: results[1].rows,
+			});
+		});
+});
+
+// public routes
 app.get("/meds", (req, res) => {
 	const client = new Client({
 		user: "postgres",
