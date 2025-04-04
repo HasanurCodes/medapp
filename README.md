@@ -1,5 +1,5 @@
 ## exercise
 
-A full stack web app project
+A beginner full stack web app project
 
 ## Status: complete
