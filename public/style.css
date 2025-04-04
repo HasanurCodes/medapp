@@ -1,0 +1,32 @@
+#myVideo {
+	width: 100%;
+}
+
+.centered {
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	border: 3px white solid;
+	padding: 50px 10px;
+}
+
+.centered-heading {
+	text-align: center;
+	color: white;
+	font-size: 4em;
+}
+
+.centered-text {
+	text-align: center;
+	color: white;
+	font-size: 1.5em;
+	margin-bottom: 50px;
+}
+
+#continue {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
